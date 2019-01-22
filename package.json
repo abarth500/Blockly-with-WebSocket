@@ -1,0 +1,16 @@
+{
+  "name": "blockly-with-websocket",
+  "version": "0.0.2",
+  "description": "Blcokly Programming with WebSocket",
+  "main": "server.js",
+  "repository": "git@github.com:abarth500/Blockly-with-WebSocket.git",
+  "author": "Shohei Yokoyama",
+  "license": "MIT",
+  "bin": {
+    "blockly-websocket-server": "server.js"
+  },
+  "dependencies": {
+    "async": "^2.6.1",
+    "ws": "^6.1.2"
+  }
+}
