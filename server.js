@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 const http = require('http'),
     ws = require('ws'),
     fs = require('fs'),
