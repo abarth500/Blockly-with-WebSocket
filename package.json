@@ -1,6 +1,6 @@
 {
   "name": "blockly-with-websocket",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Blcokly Programming with WebSocket",
   "main": "server.js",
   "repository": "git@github.com:abarth500/Blockly-with-WebSocket.git",
