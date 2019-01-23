@@ -6,12 +6,15 @@ const http = require('http'),
     path = require('path'),
     async = require('async');
 
+const bws_lang = ['en', 'ja'];
+const BLOCKLY_LANGUAGE_CODE = process.argv.length > 2 ? process.argv[2] : 'en';
+const BWS_LANGUAGE_CODE = (process.argv.length > 2 && bws_lang.includes(process.argv[2])) ? process.argv[2] : bws_lang[0];
 const values = {
     'html': path.join(__dirname, 'client.html'),
     'js': {
         '/blockly-websocket.js': path.join(__dirname, 'blockly-websocket.js'),
         '/blockly-websocket-blocks.js': path.join(__dirname, 'blockly-websocket-blocks.js'),
-        '/blockly-websocket-msg-ja.js': path.join(__dirname, 'blockly-websocket-msg-ja.js')
+        '/blockly-websocket-msg.js': path.join(__dirname, 'blockly-websocket-msg-'+BWS_LANGUAGE_CODE+'.js')
     },
     'http': 8080,
     'websocket': 8081
@@ -21,7 +24,7 @@ async.mapValues(values,
     (val, key, callback) => {
         switch (key) {
             case 'html':
-                fs.readFile(val, 'binary', callback);
+                fs.readFile(val, "utf8", callback);
                 break;
             case 'js':
                 callback(null, val);
@@ -59,7 +62,7 @@ async.mapValues(values,
                     } else {
                         console.log("[LOAD]", $['js'][request.url]);
                         response.writeHead(200, header);
-                        response.write(body, 'binary');
+                        response.write(body, 'utf8');
                         response.end();
                     }
                 });
@@ -70,8 +73,9 @@ async.mapValues(values,
                     'Pragma': 'no-cache',
                     'Cache-Control': 'no-cache'
                 }
+                console.log($['html']);
                 response.writeHead(200, header);
-                response.write($['html'], 'binary');
+                response.write($['html'].replace(/\%\%_BLOCKLY_LANGUAGE_CODE_\%\%/g, BLOCKLY_LANGUAGE_CODE), 'utf8');
                 response.end();
             } else {
                 response.writeHead(404, { 'Content-Type': 'text/plain' });
@@ -80,7 +84,7 @@ async.mapValues(values,
         });
         $['websocket'].on('connection', (client) => {
             console.log('Connect');
-            client.on('close',()=>{
+            client.on('close', () => {
                 console.log('Close');
             });
             client.on('message', (message) => {
