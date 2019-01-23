@@ -10,7 +10,8 @@ const values = {
     'html': path.join(__dirname, 'client.html'),
     'js': {
         '/blockly-websocket.js': path.join(__dirname, 'blockly-websocket.js'),
-        '/blockly-websocket-blocks.js': path.join(__dirname, 'blockly-websocket-blocks.js')
+        '/blockly-websocket-blocks.js': path.join(__dirname, 'blockly-websocket-blocks.js'),
+        '/blockly-websocket-msg-ja.js': path.join(__dirname, 'blockly-websocket-msg-ja.js')
     },
     'http': 8080,
     'websocket': 8081
